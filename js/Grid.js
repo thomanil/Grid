@@ -19,7 +19,7 @@ if (typeof Object.create !== 'function') {
 
 var Grid = Object.create([]);
 
-Grid.__proto__.newInstance = function(width, height) {
+Grid.newInstance = function(width, height) {
 	var grid = Object.create(Grid);
 	var emptyRow = [];
 	
@@ -34,12 +34,23 @@ Grid.__proto__.newInstance = function(width, height) {
 	return grid;
 };
 
-Grid.__proto__.wrap = function(twoDimArray) {
-	twoDimArray.__proto__ = Grid.__proto__;
+Grid.wrap = function(twoDimArray) {
+	if (twoDimArray.__proto__) {
+		twoDimArray.__proto__ = Grid;
+	} else {
+		var newArr = Grid.newInstance(0, 0);
+
+		for (var i = 0, l = twoDimArray.length; i < l; ++i) {
+			newArr.push(twoDimArray[i]);
+		}
+
+		twoDimArray = newArr;
+	}
+
 	return twoDimArray;
 };
 
-Grid.__proto__.equals = function(otherGrid) {	
+Grid.equals = function(otherGrid) {	
 	if (this.height() !== otherGrid.height()) {
 		return false;
 	};
@@ -58,7 +69,7 @@ Grid.__proto__.equals = function(otherGrid) {
 };
 
 
-Grid.__proto__.each = function(operation) {
+Grid.each = function(operation) {
 	_(this).each(function(row, y) {
 		_(row).each(function(cell, x){
 			operation(cell, x, y);
@@ -66,13 +77,13 @@ Grid.__proto__.each = function(operation) {
 	});	
 };
 
-Grid.__proto__.eachRow = function(operation) {
+Grid.eachRow = function(operation) {
 	_(this).each(function(row) {
 		operation(row);
 	});
 };
 
-Grid.__proto__.map = function(operation) {
+Grid.map = function(operation) {
 	var mappedArray = this.newInstance(this.width(), this.height());	
 		
 	this.each(function(cell, x, y) {
@@ -83,7 +94,7 @@ Grid.__proto__.map = function(operation) {
 	return mappedArray;
 };
 
-Grid.__proto__.get = function(x, y) {
+Grid.get = function(x, y) {
 	if (x < 0 || x > (this.width() - 1)) {
 		return undefined;
 	};
@@ -95,7 +106,7 @@ Grid.__proto__.get = function(x, y) {
 	return this[y][x];
 };
 
-Grid.__proto__.set = function(x, y, value) {
+Grid.set = function(x, y, value) {
 	if (x < 0 || x > (this.width() - 1)) {
 	 	throw "Trying to index x pos outside of Grid bounds";
 	};
@@ -107,11 +118,11 @@ Grid.__proto__.set = function(x, y, value) {
 	this[y][x] = value;
 };
 
-Grid.__proto__.width = function() {
+Grid.width = function() {
 	return this[0].length;
 };
 
-Grid.__proto__.height = function() {
+Grid.height = function() {
 	return this.length;
 };
 

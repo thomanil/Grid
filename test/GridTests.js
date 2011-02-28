@@ -18,7 +18,7 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 		var expected = Grid.wrap([[undefined,undefined],
 					     		 [undefined,undefined]]);
 		var actual = Grid.newInstance(2,2);
-		this.assert.isTrue(actual.equals(expected));		
+		this.assert.isTrue(actual.equals(expected));
 	},
 
 	testCompareEqualGrids : function() {
@@ -131,6 +131,14 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 	
 	testEachRow : function() {
 		
+	},
+
+	testWrapNo__proto__: function () {
+		var twoDimArray = [[undefined,undefined], [undefined,undefined]];
+		twoDimArray.__proto__ = null;
+		var expected = Grid.wrap(twoDimArray);
+		var actual = Grid.newInstance(2,2);
+
+		this.assert.isTrue(actual.equals(expected));
 	}
-	
 }));
