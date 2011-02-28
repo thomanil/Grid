@@ -1,3 +1,13 @@
+/*
+
+Basically, a Grid is just a two dimensional array ie. a JavaScript array with each element 
+containing another array, all of which have the same dimension. Start using the API by
+either instantiating a new empty Grid or wrapping a regular two dimensional grid.
+
+*/
+
+
+
 // D. Crockford idiom for clean object inheritance
 if (typeof Object.create !== 'function') {
     Object.create = function(o) {
@@ -8,8 +18,6 @@ if (typeof Object.create !== 'function') {
 }
 
 var Grid = Object.create([]);
-
-// TODO rejigger to use functions on itself instead of supplied grid - more OOP!
 
 Grid.__proto__.newInstance = function(width, height) {
 	var grid = Object.create(Grid);
@@ -26,18 +34,23 @@ Grid.__proto__.newInstance = function(width, height) {
 	return grid;
 };
 
-Grid.__proto__.equals = function(grid1, grid2) {	
-	if (Grid.height(grid1) !== Grid.height(grid2)) {
+Grid.__proto__.wrap = function(twoDimArray) {
+	twoDimArray.__proto__ = Grid.__proto__;
+	return twoDimArray;
+};
+
+Grid.__proto__.equals = function(otherGrid) {	
+	if (this.height() !== otherGrid.height()) {
 		return false;
 	};
 	
-	if (Grid.width(grid1) !== Grid.width(grid2)) {
+	if (this.width() !== otherGrid.width()) {
 		return false;
 	};
 	
 	var areEqual = true;
-	Grid.each(grid1, function(cell, x, y) {
-		if (cell !== grid2[y][x]) {
+	this.each(function(cell, x, y) {
+		if (cell !== otherGrid.get(x, y)) {
 		  areEqual = false;
 		};
 	});
@@ -45,61 +58,61 @@ Grid.__proto__.equals = function(grid1, grid2) {
 };
 
 
-Grid.__proto__.each = function(grid, operation) {
-	_(grid).each(function(row, y) {
+Grid.__proto__.each = function(operation) {
+	_(this).each(function(row, y) {
 		_(row).each(function(cell, x){
 			operation(cell, x, y);
 		});
 	});	
 };
 
-Grid.__proto__.eachRow = function(grid, operation) {
-	_(grid).each(function(row) {
+Grid.__proto__.eachRow = function(operation) {
+	_(this).each(function(row) {
 		operation(row);
 	});
 };
 
-Grid.__proto__.map = function(grid, operation) {
-	var mappedArray = this.newInstance(grid[0].length, grid.length);	
+Grid.__proto__.map = function(operation) {
+	var mappedArray = this.newInstance(this.width(), this.height());	
 		
-	this.each(grid, function(cell, x, y) {
+	this.each(function(cell, x, y) {
 		var mappedValue = operation(cell, x, y);
-		Grid.set(mappedArray, x, y, mappedValue);
+		mappedArray.set(x, y, mappedValue);
 	});
 	
 	return mappedArray;
 };
 
-Grid.__proto__.get = function(grid, x, y) {
-	if (x < 0 || x > (Grid.width(grid) - 1)) {
+Grid.__proto__.get = function(x, y) {
+	if (x < 0 || x > (this.width() - 1)) {
 		return undefined;
 	};
 	
-	if (y < 0 || y > (Grid.height(grid) - 1)) {
+	if (y < 0 || y > (this.height() - 1)) {
 		return undefined;
 	};
 	
-	return grid[y][x];
+	return this[y][x];
 };
 
-Grid.__proto__.set = function(grid, x, y, value) {
-	if (x < 0 || x > (Grid.width(grid) - 1)) {
+Grid.__proto__.set = function(x, y, value) {
+	if (x < 0 || x > (this.width() - 1)) {
 	 	throw "Trying to index x pos outside of Grid bounds";
 	};
 	
-	if (y < 0 || y > (Grid.height(grid) - 1)) {
+	if (y < 0 || y > (this.height() - 1)) {
 		throw "Trying to index y pos outside of Grid bounds";
 	};
 	
-	grid[y][x] = value;
+	this[y][x] = value;
 };
 
-Grid.__proto__.width = function(grid) {
-	return grid[0].length;
+Grid.__proto__.width = function() {
+	return this[0].length;
 };
 
-Grid.__proto__.height = function(grid) {
-	return grid.length;
+Grid.__proto__.height = function() {
+	return this.length;
 };
 
 

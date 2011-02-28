@@ -15,45 +15,45 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
     name: "Grid Tests",
 	
 	testCreate : function() {
-		var expected =  [[undefined,undefined],
-					     [undefined,undefined]];
+		var expected = Grid.wrap([[undefined,undefined],
+					     		 [undefined,undefined]]);
 		var actual = Grid.newInstance(2,2);
-		this.assert.isTrue(Grid.equals(expected, actual));		
+		this.assert.isTrue(actual.equals(expected));		
 	},
 
 	testCompareEqualGrids : function() {
-		var equal1 =  [[undefined,undefined],
-					  [undefined,undefined]];
-		var equal2 =  [[undefined,undefined],
-					  [undefined,undefined]];
-		this.assert.isTrue(Grid.equals(equal1, equal2));
+		var equal1 = Grid.wrap([[undefined,undefined],
+					  			[undefined,undefined]]);
+		var equal2 = Grid.wrap([[undefined,undefined],
+					  [undefined,undefined]]);
+		this.assert.isTrue(equal1.equals(equal2));
 	},
 	
 	testCompareDifferentSizedGrids : function() {
-		var small =  [[undefined,undefined],
-					  [undefined,undefined]];	
-		var large =  [[undefined,undefined,undefined],
-					  [undefined,undefined,undefined],
-					  [undefined,undefined,undefined]];
-		this.assert.isFalse(Grid.equals(small, large));
+		var small = Grid.wrap([[undefined,undefined],
+					  			[undefined,undefined]]);	
+		var large = Grid.wrap([[undefined,undefined,undefined],
+					  			[undefined,undefined,undefined],
+					  			[undefined,undefined,undefined]]);
+		this.assert.isFalse(small.equals(large));
 	},
 	
 	testCompareGridsWithDifferentContents : function() {
-		var none =  [[undefined,undefined],
-				  	 [undefined,undefined]];	
-		var some =  [[2,undefined],
-					[undefined,2]];
-		this.assert.isFalse(Grid.equals(none, some));
+		var none = Grid.wrap([[undefined,undefined],
+				  	 			[undefined,undefined]]);	
+		var some = Grid.wrap([[2,undefined],
+								[undefined,2]]);
+		this.assert.isFalse(none.equals(some));
 	},
 
 	testEach : function() {
-		var grid =  [[1,2],
-					 [3,4]];
+		var grid = Grid.wrap([[1,2],
+					 		 [3,4]]);
 		
 		var expectedSum = 10;
 		var actualSum = 0;
 		
-		Grid.each(grid, function(cell) {
+		grid.each(function(cell) {
 			actualSum += cell;
 		});
 		
@@ -61,44 +61,45 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 	},
 	
 	testMap : function() {	
-		var grid =  [[1,5],
-					 [10,100]];
-		var expected = [[2,6],
-					 	[11,101]];	
+		var grid = Grid.wrap([[1,5],
+					 		  [10,100]]);
+		var expected = Grid.wrap([[2,6],
+					 			 [11,101]]);	
 					
-		var actual = Grid.map(grid, function(cell) {
+		var actual = grid.map(function(cell) {
 			return cell + 1;
 		});
 		
-		this.assert.isTrue(Grid.equals(expected, actual));		
+		this.assert.isTrue(actual.equals(expected));		
 	},
 	
 	testGet : function() {
-		var grid =  [[1,5],
-					 [10,100]];
-		this.assert.areEqual(Grid.get(grid, 0, 0), 1);
-		this.assert.areEqual(Grid.get(grid, 1, 0), 5);		
-		this.assert.areEqual(Grid.get(grid, 0, 1), 10);		
-		this.assert.areEqual(Grid.get(grid, 1, 1), 100);
+		var grid = Grid.wrap([[1,5],
+					 		[10,100]]);
+					
+		this.assert.areEqual(grid.get(0, 0), 1);
+		this.assert.areEqual(grid.get(1, 0), 5);		
+		this.assert.areEqual(grid.get(0, 1), 10);		
+		this.assert.areEqual(grid.get(1, 1), 100);
 		
-		this.assert.areEqual(Grid.get(grid, -1, 0), undefined);
-		this.assert.areEqual(Grid.get(grid, 0, -1), undefined);
-		this.assert.areEqual(Grid.get(grid, 2, 0), undefined);
-		this.assert.areEqual(Grid.get(grid, 0, 2), undefined);
+		this.assert.areEqual(grid.get(-1, 0), undefined);
+		this.assert.areEqual(grid.get(0, -1), undefined);
+		this.assert.areEqual(grid.get(2, 0), undefined);
+		this.assert.areEqual(grid.get(0, 2), undefined);
 	},
 	
 	testSet : function() {
 		var grid = Grid.newInstance(2,2);
 		
-		Grid.set(grid, 0, 0, 123);
-		this.assert.areEqual(Grid.get(grid, 0, 0), 123);
+		grid.set(0, 0, 123);
+		this.assert.areEqual(grid.get(0, 0), 123);
 		
-		Grid.set(grid, 1, 1, 234);
-		this.assert.areEqual(Grid.get(grid, 1, 1), 234);
+		grid.set(1, 1, 234);
+		this.assert.areEqual(grid.get(1, 1), 234);
 		
 		var threwException = true;
 		try	{
-			Grid.set(grid, -1, 1, "outside");
+			grid.set(-1, 1, "outside");
 			var threwException = false;
 		} catch (e) {
 			// Expecting to fail when we go outside Grid bounds
@@ -109,7 +110,7 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 		
 		var threwException = true;
 		try	{
-			Grid.set(grid, 2, 1, "outside");
+			grid.set(2, 1, "outside");
 			var threwException = false;
 		} catch (e) {
 			// Expecting to fail when we go outside Grid bounds
