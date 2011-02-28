@@ -2,9 +2,16 @@
 
 ## DESCRIPTION:
 
-A simple implementation of two dimensional array in JavaScript. Including basic utility methods like width(), height(), getRows() as well as the basic functional enumerator methods like each() and map().
+A simple implementation of two dimensional array in JavaScript. Includes basic utility methods like width(), height(), getRows() as well as the basic functional enumerator methods like each() and map().
 
 Relies on [Underscore.js](https://github.com/documentcloud/underscore) for basic iteration functions.
+
+
+## TODO:
+
+- Create corresponding members on Grid object, delegate to functions
+- Finish writing test cases
+- Implement more enumerator methods?
 
 
 ## LICENSE:
