@@ -1,29 +1,18 @@
-var Grid = {};
+// D. Crockford idiom for clean object inheritance
+if (typeof Object.create !== 'function') {
+    Object.create = function(o) {
+        var F = function() {};
+        F.prototype = o;
+        return new F();
+    };
+}
 
-// TODO create Grid prototype with all methods on it
-// TODO create init/wrapper function a la underscore.js
+var Grid = Object.create([]);
 
-Grid.areEqual = function(grid1, grid2) {	
-	if (Grid.height(grid1) !== Grid.height(grid2)) {
-		return false;
-	};
-	
-	if (Grid.width(grid1) !== Grid.width(grid2)) {
-		return false;
-	};
-	
-	var areEqual = true;
-	Grid.eachCell(grid1, function(cell, x, y) {
-		if (cell !== grid2[y][x]) {
-		  areEqual = false;
-		};
-	});
-	return areEqual;
-};
+// TODO rejigger to use functions on itself instead of supplied grid - more OOP!
 
-
-Grid.create = function(width, height) {
-	var grid = [];
+Grid.__proto__.newInstance = function(width, height) {
+	var grid = Object.create(Grid);
 	var emptyRow = [];
 	
 	_.times(height, function(i) {
@@ -37,7 +26,26 @@ Grid.create = function(width, height) {
 	return grid;
 };
 
-Grid.eachCell = function(grid, operation) {
+Grid.__proto__.equals = function(grid1, grid2) {	
+	if (Grid.height(grid1) !== Grid.height(grid2)) {
+		return false;
+	};
+	
+	if (Grid.width(grid1) !== Grid.width(grid2)) {
+		return false;
+	};
+	
+	var areEqual = true;
+	Grid.each(grid1, function(cell, x, y) {
+		if (cell !== grid2[y][x]) {
+		  areEqual = false;
+		};
+	});
+	return areEqual;
+};
+
+
+Grid.__proto__.each = function(grid, operation) {
 	_(grid).each(function(row, y) {
 		_(row).each(function(cell, x){
 			operation(cell, x, y);
@@ -45,16 +53,16 @@ Grid.eachCell = function(grid, operation) {
 	});	
 };
 
-Grid.eachRow = function(grid, operation) {
+Grid.__proto__.eachRow = function(grid, operation) {
 	_(grid).each(function(row) {
 		operation(row);
 	});
 };
 
-Grid.mapCells = function(grid, operation) {
-	var mappedArray = this.create(grid[0].length, grid.length);	
+Grid.__proto__.map = function(grid, operation) {
+	var mappedArray = this.newInstance(grid[0].length, grid.length);	
 		
-	this.eachCell(grid, function(cell, x, y) {
+	this.each(grid, function(cell, x, y) {
 		var mappedValue = operation(cell, x, y);
 		Grid.set(mappedArray, x, y, mappedValue);
 	});
@@ -62,7 +70,7 @@ Grid.mapCells = function(grid, operation) {
 	return mappedArray;
 };
 
-Grid.get = function(grid, x, y) {
+Grid.__proto__.get = function(grid, x, y) {
 	if (x < 0 || x > (Grid.width(grid) - 1)) {
 		return undefined;
 	};
@@ -74,7 +82,7 @@ Grid.get = function(grid, x, y) {
 	return grid[y][x];
 };
 
-Grid.set = function(grid, x, y, value) {
+Grid.__proto__.set = function(grid, x, y, value) {
 	if (x < 0 || x > (Grid.width(grid) - 1)) {
 	 	throw "Trying to index x pos outside of Grid bounds";
 	};
@@ -86,11 +94,11 @@ Grid.set = function(grid, x, y, value) {
 	grid[y][x] = value;
 };
 
-Grid.width = function(grid) {
+Grid.__proto__.width = function(grid) {
 	return grid[0].length;
 };
 
-Grid.height = function(grid) {
+Grid.__proto__.height = function(grid) {
 	return grid.length;
 };
 

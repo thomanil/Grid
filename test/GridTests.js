@@ -3,7 +3,7 @@
 
 // Init logger and run tests once the document has finished loading
 YAHOO.util.Event.onDOMReady(function () {
-	//create the logger
+	//newInstance the logger
 	var logger = new YAHOO.tool.TestLogger("testLogger");
 	//run the tests
 	YAHOO.tool.TestRunner.run();
@@ -17,8 +17,8 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 	testCreate : function() {
 		var expected =  [[undefined,undefined],
 					     [undefined,undefined]];
-		var actual = Grid.create(2,2);
-		this.assert.isTrue(Grid.areEqual(expected, actual));		
+		var actual = Grid.newInstance(2,2);
+		this.assert.isTrue(Grid.equals(expected, actual));		
 	},
 
 	testCompareEqualGrids : function() {
@@ -26,7 +26,7 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 					  [undefined,undefined]];
 		var equal2 =  [[undefined,undefined],
 					  [undefined,undefined]];
-		this.assert.isTrue(Grid.areEqual(equal1, equal2));
+		this.assert.isTrue(Grid.equals(equal1, equal2));
 	},
 	
 	testCompareDifferentSizedGrids : function() {
@@ -35,7 +35,7 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 		var large =  [[undefined,undefined,undefined],
 					  [undefined,undefined,undefined],
 					  [undefined,undefined,undefined]];
-		this.assert.isFalse(Grid.areEqual(small, large));
+		this.assert.isFalse(Grid.equals(small, large));
 	},
 	
 	testCompareGridsWithDifferentContents : function() {
@@ -43,7 +43,7 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 				  	 [undefined,undefined]];	
 		var some =  [[2,undefined],
 					[undefined,2]];
-		this.assert.isFalse(Grid.areEqual(none, some));
+		this.assert.isFalse(Grid.equals(none, some));
 	},
 
 	testEach : function() {
@@ -53,7 +53,7 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 		var expectedSum = 10;
 		var actualSum = 0;
 		
-		Grid.eachCell(grid, function(cell) {
+		Grid.each(grid, function(cell) {
 			actualSum += cell;
 		});
 		
@@ -66,11 +66,11 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 		var expected = [[2,6],
 					 	[11,101]];	
 					
-		var actual = Grid.mapCells(grid, function(cell) {
+		var actual = Grid.map(grid, function(cell) {
 			return cell + 1;
 		});
 		
-		this.assert.isTrue(Grid.areEqual(expected, actual));		
+		this.assert.isTrue(Grid.equals(expected, actual));		
 	},
 	
 	testGet : function() {
@@ -88,7 +88,7 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 	},
 	
 	testSet : function() {
-		var grid = Grid.create(2,2);
+		var grid = Grid.newInstance(2,2);
 		
 		Grid.set(grid, 0, 0, 123);
 		this.assert.areEqual(Grid.get(grid, 0, 0), 123);

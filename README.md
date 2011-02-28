@@ -9,10 +9,8 @@ Relies on [Underscore.js](https://github.com/documentcloud/underscore) for basic
 
 ## TODO:
 
-- Create corresponding members on Grid object, delegate to functions
 - Finish writing test cases
 - Implement more enumerator methods?
-
 
 ## LICENSE:
 
