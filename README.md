@@ -10,13 +10,19 @@ Relies on [Underscore.js](https://github.com/documentcloud/underscore) for basic
 ## TODO:
 
 - Finish writing test cases
-- Implement more enumerator methods?
+- grid.addRow (truncate long ones, add undefined to short ones)
+- grid.addColumn (truncate long ones, add undefined to short ones)
+- grid.mapRows
+- grid.mapColumns
+- grid.eachRow
+- grid.eachColumn
+- Implement more enumerator methods
 
 ## LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2010 Grid.js
+Copyright (c) 2011 Grid.js
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
