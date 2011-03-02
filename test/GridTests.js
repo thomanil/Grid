@@ -99,7 +99,7 @@ TestCase("Grid Tests", {
 		}
 		
 		var threwException2 = true;
-		try	{
+try	{
 			grid.set(2, 1, "outside");
 			threwException2 = false;
 		} catch (ex2) {
@@ -143,6 +143,10 @@ TestCase("Grid Tests", {
 		var actual = Grid.newInstance(2,2);
 
 		assertTrue(actual.equals(expected));
-	}
+	},
+	
+	
+	
+	
 
 });
