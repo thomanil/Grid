@@ -9,14 +9,17 @@ Relies on [Underscore.js](https://github.com/documentcloud/underscore) for basic
 
 ## TODO:
 
-- Finish writing test cases
-- grid.addRow (truncate long ones, add undefined to short ones)
-- grid.addColumn (truncate long ones, add undefined to short ones)
-- grid.mapRows
-- grid.mapColumns
 - grid.eachRow
 - grid.eachColumn
-- Implement more enumerator methods
+- grid.mapRows
+- grid.mapColumns
+
+- grid.addColumns (truncate long ones, add undefined to short ones)
+- grid.addRow (truncate long ones, add undefined to short ones)
+- grid.sliceColumns
+- grid.sliceRows
+
+- <More enumerator methods, ie. fold, detect, any, all...>
 
 ## LICENSE:
 

@@ -2,7 +2,7 @@
 
 Basically, a Grid is just a two dimensional array ie. a JavaScript array with each element 
 containing another array, all of which have the same dimension. Start using the API by
-either instantiating a new empty Grid or wrapping a regular two dimensional grid.
+either instantiating a new empty Grid or wrapping a regular two dimensional array.
 
 */
 
@@ -40,9 +40,9 @@ Grid.wrap = function(twoDimArray) {
 	} else {
 		var newArr = Grid.newInstance(0, 0);
 
-		for (var i = 0, l = twoDimArray.length; i < l; ++i) {
+		_(twoDimArray).each(function(row, i) {
 			newArr.push(twoDimArray[i]);
-		}
+		});
 
 		twoDimArray = newArr;
 	}
