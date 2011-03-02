@@ -1,24 +1,14 @@
-// YUI Test setup
-
-
-// Init logger and run tests once the document has finished loading
-YAHOO.util.Event.onDOMReady(function () {
-	//newInstance the logger
-	var logger = new YAHOO.tool.TestLogger("testLogger");
-	//run the tests
-	YAHOO.tool.TestRunner.run();
-});
-
-// Set up tests
-YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
-	assert : YAHOO.util.Assert,
-    name: "Grid Tests",
+TestCase("Grid Tests", {
 	
+    testProjectNamespace:function(){
+	   assertTrue("Checking that project namespace exists", Grid !== undefined);
+    },
+
 	testCreate : function() {
 		var expected = Grid.wrap([[undefined,undefined],
 					     		 [undefined,undefined]]);
 		var actual = Grid.newInstance(2,2);
-		this.assert.isTrue(actual.equals(expected));
+		assertTrue(actual.equals(expected));
 	},
 
 	testCompareEqualGrids : function() {
@@ -26,7 +16,7 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 					  			[undefined,undefined]]);
 		var equal2 = Grid.wrap([[undefined,undefined],
 					  [undefined,undefined]]);
-		this.assert.isTrue(equal1.equals(equal2));
+		assertTrue(equal1.equals(equal2));
 	},
 	
 	testCompareDifferentSizedGrids : function() {
@@ -35,7 +25,7 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 		var large = Grid.wrap([[undefined,undefined,undefined],
 					  			[undefined,undefined,undefined],
 					  			[undefined,undefined,undefined]]);
-		this.assert.isFalse(small.equals(large));
+		assertFalse(small.equals(large));
 	},
 	
 	testCompareGridsWithDifferentContents : function() {
@@ -43,7 +33,7 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 				  	 			[undefined,undefined]]);	
 		var some = Grid.wrap([[2,undefined],
 								[undefined,2]]);
-		this.assert.isFalse(none.equals(some));
+		assertFalse(none.equals(some));
 	},
 
 	testEach : function() {
@@ -57,7 +47,7 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 			actualSum += cell;
 		});
 		
-		this.assert.areEqual(expectedSum, actualSum);		
+		assertEquals(expectedSum, actualSum);		
 	},
 	
 	testMap : function() {	
@@ -70,53 +60,53 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 			return cell + 1;
 		});
 		
-		this.assert.isTrue(actual.equals(expected));		
+		assertTrue(actual.equals(expected));		
 	},
 	
 	testGet : function() {
 		var grid = Grid.wrap([[1,5],
 					 		[10,100]]);
 					
-		this.assert.areEqual(grid.get(0, 0), 1);
-		this.assert.areEqual(grid.get(1, 0), 5);		
-		this.assert.areEqual(grid.get(0, 1), 10);		
-		this.assert.areEqual(grid.get(1, 1), 100);
+		assertEquals(grid.get(0, 0), 1);
+		assertEquals(grid.get(1, 0), 5);		
+		assertEquals(grid.get(0, 1), 10);		
+		assertEquals(grid.get(1, 1), 100);
 		
-		this.assert.areEqual(grid.get(-1, 0), undefined);
-		this.assert.areEqual(grid.get(0, -1), undefined);
-		this.assert.areEqual(grid.get(2, 0), undefined);
-		this.assert.areEqual(grid.get(0, 2), undefined);
+		assertEquals(grid.get(-1, 0), undefined);
+		assertEquals(grid.get(0, -1), undefined);
+		assertEquals(grid.get(2, 0), undefined);
+		assertEquals(grid.get(0, 2), undefined);
 	},
 	
 	testSet : function() {
 		var grid = Grid.newInstance(2,2);
 		
 		grid.set(0, 0, 123);
-		this.assert.areEqual(grid.get(0, 0), 123);
+		assertEquals(grid.get(0, 0), 123);
 		
 		grid.set(1, 1, 234);
-		this.assert.areEqual(grid.get(1, 1), 234);
+		assertEquals(grid.get(1, 1), 234);
 		
 		var threwException = true;
 		try	{
 			grid.set(-1, 1, "outside");
-			var threwException = false;
+			threwException = false;
 		} catch (e) {
 			// Expecting to fail when we go outside Grid bounds
 		}
 		if (!threwException) {
-			this.assert.fail("Should have triggered exception by indexing outside of Grid"); 
+			fail("Should have triggered exception by indexing outside of Grid"); 
 		};
 		
 		var threwException = true;
 		try	{
 			grid.set(2, 1, "outside");
-			var threwException = false;
+			threwException = false;
 		} catch (e) {
 			// Expecting to fail when we go outside Grid bounds
 		}
 		if (!threwException) {
-			this.assert.fail("Should have triggered exception by indexing outside of Grid"); 
+			fail("Should have triggered exception by indexing outside of Grid"); 
 		};
 	
 	},
@@ -139,6 +129,7 @@ YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 		var expected = Grid.wrap(twoDimArray);
 		var actual = Grid.newInstance(2,2);
 
-		this.assert.isTrue(actual.equals(expected));
+		assertTrue(actual.equals(expected));
 	}
-}));
+
+});
