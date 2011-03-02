@@ -27,9 +27,9 @@ Grid.newInstance = function(width, height) {
 		var row = [];
 		_.times(width, function(j) {
 			row.push(undefined);
-		})
+		});
 		grid.push(row);
-	})
+	});
 	
 	return grid;
 };
@@ -53,21 +53,20 @@ Grid.wrap = function(twoDimArray) {
 Grid.equals = function(otherGrid) {	
 	if (this.height() !== otherGrid.height()) {
 		return false;
-	};
-	
+	}
+
 	if (this.width() !== otherGrid.width()) {
 		return false;
-	};
+	}
 	
 	var areEqual = true;
 	this.each(function(cell, x, y) {
 		if (cell !== otherGrid.get(x, y)) {
 		  areEqual = false;
-		};
+		}
 	});
 	return areEqual;
 };
-
 
 Grid.each = function(operation) {
 	_(this).each(function(row, y) {
@@ -75,12 +74,6 @@ Grid.each = function(operation) {
 			operation(cell, x, y);
 		});
 	});	
-};
-
-Grid.eachRow = function(operation) {
-	_(this).each(function(row) {
-		operation(row);
-	});
 };
 
 Grid.map = function(operation) {
@@ -97,11 +90,11 @@ Grid.map = function(operation) {
 Grid.get = function(x, y) {
 	if (x < 0 || x > (this.width() - 1)) {
 		return undefined;
-	};
+	}
 	
 	if (y < 0 || y > (this.height() - 1)) {
 		return undefined;
-	};
+	}
 	
 	return this[y][x];
 };
@@ -109,11 +102,11 @@ Grid.get = function(x, y) {
 Grid.set = function(x, y, value) {
 	if (x < 0 || x > (this.width() - 1)) {
 	 	throw "Trying to index x pos outside of Grid bounds";
-	};
+	}
 	
 	if (y < 0 || y > (this.height() - 1)) {
 		throw "Trying to index y pos outside of Grid bounds";
-	};
+	}
 	
 	this[y][x] = value;
 };
@@ -124,6 +117,12 @@ Grid.width = function() {
 
 Grid.height = function() {
 	return this.length;
+};
+
+Grid.eachRow = function(operation) {
+	_(this).each(function(row) {
+		operation(row);
+	});
 };
 
 

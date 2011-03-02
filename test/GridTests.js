@@ -87,40 +87,53 @@ TestCase("Grid Tests", {
 		grid.set(1, 1, 234);
 		assertEquals(grid.get(1, 1), 234);
 		
-		var threwException = true;
+		var threwException1 = true;
 		try	{
 			grid.set(-1, 1, "outside");
-			threwException = false;
-		} catch (e) {
+			threwException1 = false;
+		} catch (ex1) {
 			// Expecting to fail when we go outside Grid bounds
 		}
-		if (!threwException) {
+		if (!threwException1) {
 			fail("Should have triggered exception by indexing outside of Grid"); 
-		};
+		}
 		
-		var threwException = true;
+		var threwException2 = true;
 		try	{
 			grid.set(2, 1, "outside");
-			threwException = false;
-		} catch (e) {
+			threwException2 = false;
+		} catch (ex2) {
 			// Expecting to fail when we go outside Grid bounds
 		}
-		if (!threwException) {
+		if (!threwException2) {
 			fail("Should have triggered exception by indexing outside of Grid"); 
-		};
+		}
 	
 	},
 	
 	testWidth : function() {
-		
+		var grid = Grid.newInstance(3,2);
+		assertEquals(3, grid.width());
 	},
 	
 	testHeight : function() {
-		
+		var grid = Grid.newInstance(3,2);
+		assertEquals(2, grid.height());
 	},
 	
 	testEachRow : function() {
+		var grid = Grid.wrap([[1,5],
+					 		[10,100]]);
+		var sumOfCells = 0;
 		
+		grid.eachRow(function(row) {
+			_(row).each(function(cell) {
+				sumOfCells += cell;
+			});
+		});
+		
+		assertEquals(116, sumOfCells);
+					
 	},
 
 	testWrapNo__proto__: function () {
