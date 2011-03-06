@@ -111,11 +111,9 @@ var Grid = (function() {
         var grid = Object.create(gridPrototype);
         var emptyRow = [];
 
-        _.times(height,
-        function(i) {
+        _(height).times(function(i) {
             var row = [];
-            _.times(width,
-            function(j) {
+            _(width).times(function() {
                 row.push(undefined);
             });
             grid.push(row);
@@ -125,10 +123,13 @@ var Grid = (function() {
     };
 
     return function() { // Constructor	
-		if(_.isArray(arguments[0])){
-			return gridPrototype.wrap(arguments[0]);
-		} else if(typeof arguments[0] === 'number' && typeof arguments[1] === 'number' ){
-			return gridPrototype.getEmptyGrid(arguments[0], arguments[1]);
+		var arg1 = arguments[0];
+		var arg2 = arguments[1];
+	
+		if(_.isArray(arg1)){
+			return gridPrototype.wrap(arg1);
+		} else if(_(arg1).isNumber() && _(arg2).isNumber()){
+			return gridPrototype.getEmptyGrid(arg1, arg2);
 		} else {
 			throw "Usage: new Grid(xDim, yDim) OR new Grid(arrayOfArrays)";
 		}
