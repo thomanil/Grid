@@ -1,0 +1,1 @@
+clAutotest "sh scripts/test" "js" "Tests failed" "."
