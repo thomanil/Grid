@@ -6,7 +6,7 @@ TestCase("Grid Tests", {
             var grid = new Grid("Expects array of arrays or length/width numbers");
             threwConstructorException = false;
         } catch(ex1) {
-            assertEquals("Not supported usage of constructor.Usage: new Grid(xDim, yDim) OR new Grid(arrayOfArrays)", ex1);
+            assertEquals("Usage: new Grid(xDim, yDim) OR new Grid(arrayOfArrays)", ex1);
             }
         if (!threwConstructorException) {
             fail("Should have triggered exception giving suggested usage of Grid constructor.");

@@ -130,7 +130,7 @@ var Grid = (function() {
 		} else if(typeof arguments[0] === 'number' && typeof arguments[1] === 'number' ){
 			return gridPrototype.getEmptyGrid(arguments[0], arguments[1]);
 		} else {
-			throw "Not supported usage of constructor.Usage: new Grid(xDim, yDim) OR new Grid(arrayOfArrays)";
+			throw "Usage: new Grid(xDim, yDim) OR new Grid(arrayOfArrays)";
 		}
     };
 
