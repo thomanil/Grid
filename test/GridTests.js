@@ -142,6 +142,34 @@ TestCase("Grid Tests", {
         });
 
         assertEquals(116, sumOfCells);
-    }
+    },
+
+	testEachNeighbour: function(attribute){
+		var grid = new Grid([[1,10,100], 
+							 [5,50,500],
+							 [8,80,800]]);
+		var expectedSum = 1504; 
+		
+		var actualSum = 0;
+		grid.eachNeighbour(1, 1, function(cell) {
+			actualSum += cell;
+		});
+		
+		assertEquals(expectedSum,actualSum);
+	},	
+	
+	testEachNeighbourAtEdge: function(attribute){
+		var grid = new Grid([[1,10,100], 
+							 [5,50,500],
+							 [8,80,800]]);
+		var expectedSum = 149; 
+		
+		var actualSum = 0;
+		grid.eachNeighbour(0, 1, function(cell) {
+			actualSum += cell;
+		});
+		
+		assertEquals(expectedSum,actualSum);
+	},
 
 });

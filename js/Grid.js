@@ -122,6 +122,27 @@ var Grid = (function() {
         return grid;
     };
 
+	gridPrototype.eachNeighbour = function(x, y, todo){
+		var grid = this;
+		var doForNeighbour = function(deltaX, deltaY) {
+		  var xPos = x + deltaX;
+		  var yPos = y + deltaY;
+		  var cell = grid.get(xPos, yPos);
+		  if(cell){
+			todo(cell);
+	      }
+		};
+		
+		doForNeighbour(-1,-1);
+		doForNeighbour(0,-1);
+		doForNeighbour(1,-1);
+		doForNeighbour(-1,1);
+		doForNeighbour(0,1);
+		doForNeighbour(1,1);
+		doForNeighbour(-1,0);
+		doForNeighbour(1,0);
+	};
+
     return function() { // Constructor	
 		var arg1 = arguments[0];
 		var arg2 = arguments[1];
