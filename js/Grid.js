@@ -32,6 +32,7 @@ var Grid = (function() {
         return newGrid;
     };
 
+    
     gridPrototype.equals = function(otherGrid) {
         if (this.height() !== otherGrid.height()) {
             return false;
@@ -79,8 +80,9 @@ var Grid = (function() {
         }
 
         return this[y][x];
+	
     };
-
+    
     gridPrototype.set = function(x, y, value) {
         if (x < 0 || x > (this.width() - 1)) {
             throw "Trying to index x pos outside of Grid bounds";
@@ -91,6 +93,51 @@ var Grid = (function() {
         }
 
         this[y][x] = value;
+    };
+
+    gridPrototype.getWrapped = function(x, y) {
+	var xCalculated = x;
+	var yCalculated = y;
+
+	if (x < 0) {
+            xCalculated = this.width() - (-x % this.width());
+        }
+	else if (x > (this.width() - 1)) {
+	    xCalculated = x % this.width();
+	}
+
+        if (y < 0) {
+	    yCalculated = this.height() - (-y % this.height());
+	}
+	else if (y > (this.height() - 1)) {
+            yCalculated = y % this.height();
+        }
+
+	
+        return this[yCalculated][xCalculated];
+    };
+    
+    gridPrototype.setWrapped = function(x, y, value) {
+	var xCalculated = x;
+	var yCalculated = y;
+
+	if (x < 0) {
+            xCalculated = this.width() - (-x % this.width());
+        }
+	else if (x > (this.width() - 1)) {
+	    xCalculated = x % this.width();
+	}
+
+        if (y < 0) {
+	    yCalculated = this.height() - (-y % this.height());
+	}
+	else if (y > (this.height() - 1)) {
+            yCalculated = y % this.width();
+        }
+
+	console.log(xCalculated + " " + yCalculated);
+	
+        this[yCalculated][xCalculated] = value;
     };
 
     gridPrototype.width = function() {
@@ -107,7 +154,7 @@ var Grid = (function() {
         });
     };
 
- 	gridPrototype.getEmptyGrid = function(width, height) {
+    gridPrototype.getEmptyGrid = function(width, height) {
         var grid = Object.create(gridPrototype);
         var emptyRow = [];
 
@@ -122,7 +169,7 @@ var Grid = (function() {
         return grid;
     };
 
-	gridPrototype.eachNeighbour = function(x, y, todo){
+    gridPrototype.eachNeighbour = function(x, y, todo){
 		var grid = this;
 		var doForNeighbour = function(deltaX, deltaY) {
 		  var xPos = x + deltaX;
@@ -141,7 +188,7 @@ var Grid = (function() {
 		doForNeighbour(1,1);
 		doForNeighbour(-1,0);
 		doForNeighbour(1,0);
-	};
+    };
 
     return function() { // Constructor	
 		var arg1 = arguments[0];
